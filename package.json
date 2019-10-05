@@ -10,16 +10,38 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.helloWorld"
+		"*"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.helloWorld",
-				"title": "Hello World"
+				"command": "shell-command-status.printSettings",
+				"title": "Shell Command Status: Print Settings"
 			}
-		]
+		],
+		"configuration": {
+			"title": "Shell Command Status",
+			"properties": {
+				"shell-command-status.shell": {
+					"type": "string",
+					"scope": "window",
+					"default": "bash",
+					"description": "The shell used to run the status command. This extension runs <shell> -c <command>"
+				},
+				"shell-command-status.cwd": {
+					"type": "string",
+					"scope": "window",
+					"description": "The working directory to use when running commands"
+				},
+				"shell-command-status.listCommand": {
+					"type": "string",
+					"scope": "window",
+					"default": "echo Hello",
+					"description": "The shell command to run to list the status items. Each line is an item."
+				}
+			}
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",

@@ -27,7 +27,7 @@
 					"type": "string",
 					"scope": "window",
 					"default": "bash",
-					"description": "The shell used to run the status command. This extension runs <shell> -c <command>"
+					"description": "The shell used to run the status command. This extension runs <shell> -c <command>. Use JSON input for real control over escape chars, etc."
 				},
 				"shell-command-status.cwd": {
 					"type": "string",
@@ -41,6 +41,14 @@
 					"description": "The shell command to run to list the status items. Each line is an item. The command will be run every half second, unless the last run hasn't finished."
 				}
 			}
+		},
+		"views": {
+			"explorer": [
+				{
+					"id": "shellCommandStatusView",
+					"name": "Shell Command Status"
+				}
+			]
 		}
 	},
 	"scripts": {

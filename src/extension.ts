@@ -9,7 +9,6 @@ interface Config {
 
 const readNewSettings = (): Config => {
 	const config = vscode.workspace.getConfiguration();
-	console.log(`Updated Settings`);
 
 	return {
 		shell: config.get<string>('shell-command-status.shell', "bash"),
@@ -56,9 +55,47 @@ const updateLoop = (updateFn: () => void, delayMs: number): vscode.Disposable =>
 	return { dispose: () => clearTimeout(t) };
 };
 
-export function activate(context: vscode.ExtensionContext) {
+interface TreeNode {
+	parent: TreeNode | null;
+	contents: string;
+}
 
-	console.log('Congratulations, your extension "shell-command-status" is now active!');
+interface SuccessfulCommandResults {
+	lines: string[];
+}
+type CommandResults = SuccessfulCommandResults | undefined;
+
+class TestTreeDataProvider implements vscode.TreeDataProvider<TreeNode> {
+	private _onDidChangeTreeData: vscode.EventEmitter<any> = new vscode.EventEmitter<any>();
+	readonly onDidChangeTreeData: vscode.Event<any> = this._onDidChangeTreeData.event;
+	private commandResults: CommandResults = {lines: ['No command run']};
+
+	public refresh(c: CommandResults): any {
+		this.commandResults = c;
+		this._onDidChangeTreeData.fire(undefined);
+	}
+
+
+	public getTreeItem(element: TreeNode): vscode.TreeItem {
+		return {label: element.contents};
+	}
+
+	public getChildren(element?: TreeNode): TreeNode[] {
+		if (!element) { // Root node
+			return ((this.commandResults && this.commandResults.lines) || []).map<TreeNode>(s => ({parent: null, contents: s}));
+		}
+		return [];
+	}
+
+	public getParent(element: TreeNode): TreeNode {
+		return element.parent || element;
+	}
+}
+
+
+export function activate(context: vscode.ExtensionContext) {
+	const treeDataProvider = new TestTreeDataProvider();
+	vscode.window.createTreeView('shellCommandStatusView', { treeDataProvider });
 
 	let listProcess = singleChildProcessRunner();
 	context.subscriptions.push(listProcess);
@@ -74,7 +111,7 @@ export function activate(context: vscode.ExtensionContext) {
 			if (stderr) {
 				addText(`===== stderr =====\n${stderr}`);
 			}
-			console.log(lines.join('\n'));
+			treeDataProvider.refresh({lines})
 		});
 	}, 500));
 	let disposable = vscode.commands.registerCommand('shell-command-status.printSettings', () => {

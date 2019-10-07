@@ -38,7 +38,7 @@
 					"type": "string",
 					"scope": "window",
 					"default": "echo Hello",
-					"description": "The shell command to run to list the status items. Each line is an item."
+					"description": "The shell command to run to list the status items. Each line is an item. The command will be run every half second, unless the last run hasn't finished."
 				}
 			}
 		}
@@ -60,5 +60,8 @@
 		"typescript": "^3.3.1",
 		"tslint": "^5.12.1",
 		"vscode-test": "^1.2.0"
+	},
+	"dependencies": {
+		"child_process": "^1.0.2"
 	}
 }

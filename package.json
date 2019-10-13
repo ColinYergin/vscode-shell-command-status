@@ -1,6 +1,7 @@
 {
 	"name": "shell-command-status",
 	"publisher": "yergicol",
+	"repository": {"url": "https://github.com/ColinYergin/vscode-shell-command-status"},
 	"displayName": "Shell Command Status",
 	"description": "Periodically run a shell command and show the results in a panel.",
 	"version": "0.0.1",

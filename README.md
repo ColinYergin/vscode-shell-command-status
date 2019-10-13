@@ -8,7 +8,7 @@ Specify the shell, working directory, and shell command.
 
 For example if there is an image subfolder under your extension project workspace:
 
-![find example](src/images/find_example.gif)
+![find example](https://raw.githubusercontent.com/ColinYergin/vscode-shell-command-status/master/src/images/find_example.gif)
 
 ## Extension Settings
 

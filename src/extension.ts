@@ -108,9 +108,6 @@ export function activate(context: vscode.ExtensionContext) {
 			if (error) {
 				addText(`===== Error =====\n${error}`);
 			}
-			if (stderr) {
-				addText(`===== stderr =====\n${stderr}`);
-			}
 			treeDataProvider.refresh({lines})
 		});
 	}, 500));

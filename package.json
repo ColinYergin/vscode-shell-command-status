@@ -1,5 +1,6 @@
 {
 	"name": "shell-command-status",
+	"publisher": "yergicol",
 	"displayName": "Shell Command Status",
 	"description": "Periodically run a shell command and show the results in a panel.",
 	"version": "0.0.1",

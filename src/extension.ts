@@ -92,7 +92,6 @@ class TestTreeDataProvider implements vscode.TreeDataProvider<TreeNode> {
 	}
 }
 
-
 export function activate(context: vscode.ExtensionContext) {
 	const treeDataProvider = new TestTreeDataProvider();
 	vscode.window.createTreeView('shellCommandStatusView', { treeDataProvider });
@@ -108,7 +107,7 @@ export function activate(context: vscode.ExtensionContext) {
 			if (error) {
 				addText(`===== Error =====\n${error}`);
 			}
-			treeDataProvider.refresh({lines})
+			treeDataProvider.refresh({lines});
 		});
 	}, 500));
 	let disposable = vscode.commands.registerCommand('shell-command-status.printSettings', () => {
